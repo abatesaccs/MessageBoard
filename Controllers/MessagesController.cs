@@ -60,12 +60,17 @@ namespace MessageBoard.Controllers
       
 
         // PUT api/messages/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] Message message)
+        [HttpPut("{id}/{user}")]
+        public void Put(int id, [FromBody] Message message, string user)
         {
-            message.MessageId = id;
-            _db.Entry(message).State = EntityState.Modified;
-            _db.SaveChanges();
+
+            if(message.User == user)
+            {
+                message.MessageId = id;
+                _db.Entry(message).State = EntityState.Modified;
+                _db.SaveChanges();
+            }
+           
         }
 
         // DELETE api/messages/2/doug
